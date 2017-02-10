@@ -1,6 +1,8 @@
 <?php
 require_once("../moodle/config.php");
+
 print_r($CFG);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
