@@ -7,9 +7,8 @@ if(mysqli_connect_error()) {
 }
 if(!$mysqli->set_charset("UTF8")) { // เปลี่ยน charset เป้น utf8 พร้อมตรวจสอบการเปลี่ยน
     printf("Error loading character set utf8: %sn", $mysqli->error);  // ถ้าเปลี่ยนไม่ได้
-}else{
-    printf("Current character set: %sn", $mysqli->character_set_name()); // ถ้าเปลี่ยนได้
 }
+
 // echo $mysqli->character_set_name();  // แสดง charset เอา comment ออก
 // echo 'Success... ' . $mysqli->host_info . "n";
 
@@ -122,18 +121,18 @@ $mysqli->close();
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4 project">
-					<h3 id="counter"><?php echo $subject_total; ?></h3>
+					<h3 id="counter">0</h3>
 					<h4>จำนวนรายวิชาทั้งหมด</h4>
 					<p>Dolor sit amet, consectetur adipiscing elit quisque tempus eget diam et lorem a laoreet phasellus ut nisi id leo molestie. </p>
 				</div>
 				<div class="col-md-4 project">
 					<h3 id="counter1">0</h3>
-					<h4>Happy Customers</h4>
+					<h4>จำนวนนักเรียนทั้งหมด</h4>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit quisque tempus eget diam et. laoreet phasellus ut nisi id leo.  </p>
 				</div>
 				<div class="col-md-4 project">
 					<h3 id="counter2" style="margin-left: 20px;">0</h3>
-					<h4 style="margin-left: 20px;">Professional Awards</h4>
+					<h4 style="margin-left: 20px;">จำนวนบุคลากรทั้งหมด</h4>
 					<p>Consectetur adipiscing elit quisque tempus eget diam et laoreet phasellus ut nisi id leo molestie adipiscing vitae a vel. </p>
 				</div>
 			</div>
@@ -837,15 +836,15 @@ $mysqli->close();
 					setInterval(function(){
 						
 						var curval=parseInt($('#counter').text());
-						var curval1=parseInt($('#counter1').text().replace(' ',''));
+						var curval1=parseInt($('#counter1').text());
 						var curval2=parseInt($('#counter2').text());
-						if(curval<=707){
+						if(curval<<?php echo $subject_total; ?>){
 							$('#counter').text(curval+1);
 						}
-						if(curval1<=12280){
-							$('#counter1').text(sdf_FTS((curval1+20),0,' '));
+						if(curval1<12280){
+							$('#counter1').text(curval1+1);
 						}
-						if(curval2<=245){
+						if(curval2<245){
 							$('#counter2').text(curval2+1);
 						}
 					}, 2);
