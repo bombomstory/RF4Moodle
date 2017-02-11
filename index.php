@@ -1,7 +1,23 @@
 <?php
 require_once("../moodle/config.php");
+$mysqli = @new mysqli($CFG->dbhost, $CFG->dbuser, $CFG->dbpass, $CFG->dbname);
+if(mysqli_connect_error()) {
+    die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+    exit;
+}
+if(!$mysqli->set_charset("UTF8")) { // เปลี่ยน charset เป้น utf8 พร้อมตรวจสอบการเปลี่ยน
+    printf("Error loading character set utf8: %sn", $mysqli->error);  // ถ้าเปลี่ยนไม่ได้
+}else{
+    printf("Current character set: %sn", $mysqli->character_set_name()); // ถ้าเปลี่ยนได้
+}
+// echo $mysqli->character_set_name();  // แสดง charset เอา comment ออก
+// echo 'Success... ' . $mysqli->host_info . "n";
 
-print_r($CFG);
+$sql="select * from ".$CFG->prefix."course where 1=1";
+$result = $mysqli->query($sql); // ทำการ query คำสั่ง sql 
+$subject_total=$result->num_rows;  // นับจำนวนถวที่แสดง ทั้งหมด
+
+$mysqli->close();
 
 ?>
 <!DOCTYPE html>
@@ -106,8 +122,8 @@ print_r($CFG);
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4 project">
-					<h3 id="counter">0</h3>
-					<h4>Awesome Projects</h4>
+					<h3 id="counter"><?php echo $subject_total; ?></h3>
+					<h4>จำนวนรายวิชาทั้งหมด</h4>
 					<p>Dolor sit amet, consectetur adipiscing elit quisque tempus eget diam et lorem a laoreet phasellus ut nisi id leo molestie. </p>
 				</div>
 				<div class="col-md-4 project">
